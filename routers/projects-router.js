@@ -59,4 +59,21 @@ router.get("/:id", async (req, res) => {
       .json({ message: "That project information cannot be found!" });
   }
 });
+
+router.delete("/:id", async (req, res) => {
+  try {
+    const count = await db.remove(req.params.id);
+    if (count > 0) {
+      res.status(200).json({ message: "That project has been nuked!" });
+    } else {
+      res.status(404).json({ message: "That project cannot be found" });
+    }
+  } catch (error) {
+    console.log(error);
+    res
+      .status(500)
+      .json({ message: " There was an error removing that post!" });
+  }
+});
+
 module.exports = router;
