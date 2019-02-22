@@ -101,20 +101,40 @@ router.get("/:id/posts", async (req, res) => {
     if (posts.length) {
       res.status(200), json(posts);
     } else {
-      res
-        .status(404)
-        .json({
-          error: true,
-          message: " No posts found for this action, Potter!"
-        });
+      res.status(404).json({
+        error: true,
+        message: " No posts found for this action, Potter!"
+      });
     }
   } catch (error) {
+    res.status(500).json({
+      error: true,
+      message: " We are unable to find posts at this time."
+    });
+  }
+});
+
+//update actions
+router.put("/:id", async (req, res) => {
+  if (!req.body.id) {
+    res.status(400).json({
+      error:
+        " His name must not be mentioned, Harry: you must have a name for your action!"
+    });
+    return;
+  }
+  try {
+    const action = await db.update(req.params.id, req.body);
+    if (action) {
+      res.status(200).json(action);
+    } else {
+      res.status(404).json({ message: "The action cannot be found!" });
+    }
+  } catch (error) {
+    console.log(error);
     res
       .status(500)
-      .json({
-        error: true,
-        message: " We are unable to find posts at this time."
-      });
+      .json({ message: "Hermione, their was an error updating the action!" });
   }
 });
 
