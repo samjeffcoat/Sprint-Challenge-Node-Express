@@ -10,8 +10,8 @@ module.exports = router;
 
 router.get("/", async (req, res) => {
   try {
-    const db = await db.get();
-    res.status(200).json(db);
+    let projects = await db.get();
+    res.status(200).json(projects);
   } catch (error) {
     res.status(500).json({
       error: "The projects information you are looking for cannot be found"
