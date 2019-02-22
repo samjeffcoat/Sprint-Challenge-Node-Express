@@ -17,6 +17,29 @@ router.get("/", async (req, res) => {
   }
 });
 
+//Post to specific project id
+router.post("/", async (req, res) => {
+  if (!req.body.name || !req.body.description) {
+    res.status(400).json({
+      error: "Please provide a name and description for your project"
+    });
+    return;
+  }
+  const projectFull = {
+    name: req.body.name,
+    description: req.body.description,
+    completed: req.body.completed
+  };
+  try {
+    let newProject = await db.insert(projectFull);
+    res.status(201).json(newProject);
+  } catch (error) {
+    res.status(500).json({
+      error: "There was an error adding that project to the database"
+    });
+  }
+});
+
 //Get projects by ID
 
 router.get("/:id", async (req, res) => {
@@ -36,5 +59,4 @@ router.get("/:id", async (req, res) => {
       .json({ message: "That project information cannot be found!" });
   }
 });
-
 module.exports = router;
