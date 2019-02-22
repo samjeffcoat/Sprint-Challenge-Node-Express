@@ -93,4 +93,29 @@ router.delete("/:id", async (req, res) => {
   }
 });
 
+/// get users post by id
+
+router.get("/:id/posts", async (req, res) => {
+  try {
+    let posts = await db.getActionPosts(req.params.id);
+    if (posts.length) {
+      res.status(200), json(posts);
+    } else {
+      res
+        .status(404)
+        .json({
+          error: true,
+          message: " No posts found for this action, Potter!"
+        });
+    }
+  } catch (error) {
+    res
+      .status(500)
+      .json({
+        error: true,
+        message: " We are unable to find posts at this time."
+      });
+  }
+});
+
 module.exports = router;
