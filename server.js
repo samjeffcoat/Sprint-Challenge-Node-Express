@@ -5,8 +5,8 @@ const actionsRouter = require("./routers/actions-router");
 const server = express();
 
 server.use(express.json());
-server.use("/projects/", projectsRouter);
-server.use("/actions/", actionsRouter);
+server.use("/api/projects", projectsRouter);
+server.use("/api/actions", actionsRouter);
 server.get("/", (req, res) => {
   res.send(
     `

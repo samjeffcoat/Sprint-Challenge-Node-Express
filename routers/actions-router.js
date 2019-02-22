@@ -20,7 +20,7 @@ router.get("/", async (req, res) => {
 
 router.get("/:id", async (req, res) => {
   try {
-    const post = await db.getById(req.params.id);
+    const post = await db.get(req.params.id);
     if (post.length > 0) {
       res.status(200).json(post);
     } else {
@@ -95,7 +95,7 @@ router.delete("/:id", async (req, res) => {
 
 /// get users post by id
 
-router.get("/:id/posts", async (req, res) => {
+router.get("/:id/projects", async (req, res) => {
   try {
     let posts = await db.getActionPosts(req.params.id);
     if (posts.length) {
