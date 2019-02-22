@@ -1,15 +1,17 @@
-const express = require('express');
+const express = require("express");
 
-const server= express();
+const projectsRouter = require("./routers/projects-router");
+
+const server = express();
 
 server.use(express.json());
-
+server.use("/projects/", projectsRouter);
 server.get("/", (req, res) => {
-    res.send(
-        `
+  res.send(
+    `
         <h2> Sam's Beautiful API</h>
         `
-    );
-})
+  );
+});
 
-module.exports= server;
+module.exports = server;
