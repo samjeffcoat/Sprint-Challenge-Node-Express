@@ -20,9 +20,9 @@ router.get("/", async (req, res) => {
 
 router.get("/:id", async (req, res) => {
   try {
-    const post = await db.get(req.params.id);
-    if (post.length > 0) {
-      res.status(200).json(post);
+    const action = await db.get(req.params.id);
+    if (action) {
+      res.status(200).json(action);
     } else {
       res
         .status(404)
@@ -116,13 +116,6 @@ router.get("/:id/projects", async (req, res) => {
 
 //update actions
 router.put("/:id", async (req, res) => {
-  if (!req.body.id) {
-    res.status(400).json({
-      error:
-        " His name must not be mentioned, Harry: you must have a name for your action!"
-    });
-    return;
-  }
   try {
     const action = await db.update(req.params.id, req.body);
     if (action) {
